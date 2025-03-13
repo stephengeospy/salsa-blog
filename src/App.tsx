@@ -8,8 +8,7 @@ function App(){
     <ChakraProvider>
       <Router>
         <Routes>
-          <Route path="/docs/:docName" element={<Layout />} />
-          <Route path="/" element={<Layout />} />
+          <Route path="/docs/*" element={<Layout />} />
         </Routes>
       </Router>
     </ChakraProvider>

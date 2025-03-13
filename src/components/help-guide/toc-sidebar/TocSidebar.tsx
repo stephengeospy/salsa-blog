@@ -1,25 +1,33 @@
-import './TocSidebar.css';
-import { Box, Heading, List, ListItem, Link } from "@chakra-ui/react";
-
-interface TocItem {
-  heading: string;
-  slug: string;
-}
+import { Box, List, ListItem, Text, Link, useColorModeValue } from "@chakra-ui/react";
+import { TocItem } from "../layout/Layout";
 
 interface TocSidebarProps {
   toc: TocItem[];
 }
 
-function TocSidebar({ toc }: TocSidebarProps) {
+function TocSidebar({ toc }: TocSidebarProps){
+  const focusBg = useColorModeValue("orange.100", "orange.700");
+  
   return (
-    <Box as="nav" p={5}>
-      <Heading size="md" mb={4}>
+    <Box paddingRight={4}>
+      <Text fontWeight="bold" mb={2}>
         On this page
-      </Heading>
-      <List spacing={3}>
+      </Text>
+      <List spacing={2}>
         {toc.map((item) => (
-          <ListItem key={item.slug}>
-            <Link href={`#${item.slug}`}>{item.heading}</Link>
+          <ListItem
+            key={item.id}
+          >
+            <Link
+              href={`#${item.id}`}
+              fontSize="md"
+              p={2}
+              display="block"
+              textAlign="left"
+              _hover={{ bg: focusBg, color: "orange.900" }}
+            >
+              {item.text}
+            </Link>
           </ListItem>
         ))}
       </List>

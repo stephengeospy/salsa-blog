@@ -1,39 +1,53 @@
-import { useEffect, useState } from "react";
-import { Box, Grid, GridItem } from "@chakra-ui/react";
+import { useState } from "react";
+import { Box, Flex, Grid, GridItem, Image, HStack, Link, Text } from "@chakra-ui/react";
 import FileSidebar from "../file-sidebar/FileSidebar";
 import MarkdownViewer from "../markdown-viewer/MarkdownViewer";
 import TocSidebar from "../toc-sidebar/TocSidebar";
-import './Layout.css'
 
+export interface TocItem { 
+  id: string; 
+  text: string 
+}
 
-interface TocItem {
-    heading: string;
-    slug: string;
-  }
-  
-  function Layout(){
-    const [toc, setToc] = useState<TocItem[]>([]);
-    const [files, setFiles] = useState<string[]>([]);
-  
-    useEffect(() => {
-      // Fetch the list of files from the GitHub repository
-      const fetchFiles = async () => {
-        const url = "https://api.github.com/repos/stephengeospy/salsa-documentation/contents?ref=develop";
-        try {
-          const response = await fetch(url);
-          const data = await response.json();
-          const markdownFiles = data.filter((file: any) => file.name.endsWith(".md")).map((file: any) => file.name);
-          setFiles(markdownFiles);
-        } catch (error) {
-          console.error("Error fetching files:", error);
-        }
-      };
-  
-      fetchFiles();
-    }, []);
+function Layout(){
+  const [toc, setToc] = useState<TocItem[]>([]);
+  console.log(toc)
 
-return (
-    <Grid templateColumns="250px 1fr 300px" height="100vh">
+  return (
+    <Box>
+      {/* Header */}
+      <Flex
+        as="header"
+        align="center"
+        justify="space-between"
+        padding="1rem"
+        bg="orange.100"
+        color="black"
+      >
+        {/* Logo */}
+        <Flex align="center">
+          <Image
+            src="/sample-logo.svg"
+            alt="Logo"
+            boxSize="40px"
+          />
+          <Text fontSize="xl" fontWeight="bold" marginLeft="4">
+            Salsa Blog
+          </Text>
+        </Flex>
+
+        {/* Links */}
+        <HStack spacing="24px">
+          <Link href="/docs/Overview" _hover={{ textDecoration: "underline" }}>
+            Home
+          </Link>
+          <Link href="/app" _hover={{ textDecoration: "underline" }}>
+            Salsa App
+          </Link>
+        </HStack>
+      </Flex>
+       {/* Main content */}
+      <Grid templateColumns="250px 1fr 300px" height="100vh">
       {/* Left Sidebar - File List */}
       <GridItem
         display="flex"
@@ -49,10 +63,10 @@ return (
           maxHeight="100vh"
           overflowY="auto"
           width="100%"
-          p={2}
+          paddingTop={10}
           paddingRight={0}
         >
-          <FileSidebar files={files} />
+          <FileSidebar />
         </Box>
       </GridItem>
 
@@ -85,12 +99,15 @@ return (
           maxHeight="100vh"
           overflowY="auto"
           width="100%"
+          paddingTop={10}
           p={4}
         >
           <TocSidebar toc={toc} />
         </Box>
       </GridItem>
     </Grid>
-  );}
+    </Box>
+  );
+};
 
 export default Layout;
