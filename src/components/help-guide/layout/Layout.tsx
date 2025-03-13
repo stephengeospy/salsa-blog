@@ -22,7 +22,6 @@ interface TocItem {
         try {
           const response = await fetch(url);
           const data = await response.json();
-          console.log('data', data)
           const markdownFiles = data.filter((file: any) => file.name.endsWith(".md")).map((file: any) => file.name);
           setFiles(markdownFiles);
         } catch (error) {

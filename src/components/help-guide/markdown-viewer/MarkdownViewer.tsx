@@ -15,6 +15,10 @@ interface MarkdownViewerProps {
   setToc: (toc: TocItem[]) => void;
 }
 
+function formatSlug(heading: string){
+    return heading.toLowerCase().replace(/\s+/g, "-").replace(/\./g, "");
+}
+
 function MarkdownViewer({ setToc }: MarkdownViewerProps) {
   const { docName } = useParams<{ docName: string }>();
   const [content, setContent] = useState<string | null>(null);
@@ -45,9 +49,7 @@ function MarkdownViewer({ setToc }: MarkdownViewerProps) {
     const headingLines = text.split("\n").filter((line) => line.startsWith("#"));
     return headingLines.map((line) => {
       const heading = line.replace(/#/g, "").trim();
-      const slug = heading.toLowerCase().replace(/\s+/g, "-").replace(/\./g, "");
-      console.log('heading: ', heading)
-      console.log('slug: ', slug)
+      const slug = formatSlug(heading)
       return { heading, slug };
     });
   };
@@ -63,7 +65,7 @@ function MarkdownViewer({ setToc }: MarkdownViewerProps) {
         rehypePlugins={[rehypeSlug]}
         components={{
           h1: ({ children }) => (
-            <Heading as="h1" size="2xl" mb={4} id={String(children).toLowerCase().replace(/\s+/g, "-").replace(/\./g, "")}>
+            <Heading as="h1" size="2xl" mb={4} id={formatSlug(String(children))}>
               {children}
             </Heading>
           ),
@@ -73,28 +75,28 @@ function MarkdownViewer({ setToc }: MarkdownViewerProps) {
                 <Divider />
             </Box>
             
-            <Heading as="h2" size="xl" mb={4} id={String(children).toLowerCase().replace(/\s+/g, "-").replace(/\./g, "")}>
+            <Heading as="h2" size="xl" mb={4} id={formatSlug(String(children))}>
               {children}
             </Heading>
             </>
           ),
           h3: ({ children }) => (
-            <Heading as="h3" size="lg" mb={3} id={String(children).toLowerCase().replace(/\s+/g, "-").replace(/\./g, "")}>
+            <Heading as="h3" size="lg" mb={3} id={formatSlug(String(children))}>
               {children}
             </Heading>
           ),
           h4: ({ children }) => (
-            <Heading as="h4" size="md" mb={3} id={String(children).toLowerCase().replace(/\s+/g, "-").replace(/\./g, "")}>
+            <Heading as="h4" size="md" mb={3} id={formatSlug(String(children))}>
               {children}
             </Heading>
           ),
           h5: ({ children }) => (
-            <Heading as="h5" size="sm" mb={2} id={String(children).toLowerCase().replace(/\s+/g, "-").replace(/\./g, "")}>
+            <Heading as="h5" size="sm" mb={2} id={formatSlug(String(children))}>
               {children}
             </Heading>
           ),
           h6: ({ children }) => (
-            <Heading as="h6" size="xs" mb={2} id={String(children).toLowerCase().replace(/\s+/g, "-").replace(/\./g, "")}>
+            <Heading as="h6" size="xs" mb={2} id={formatSlug(String(children))}>
               {children}
             </Heading>
           ),
@@ -102,7 +104,6 @@ function MarkdownViewer({ setToc }: MarkdownViewerProps) {
           li: ({ children }) => <Text as="li" mb={2}>{children}</Text>
         }}
       />
-        // <ReactMarkdown children={content || ""} remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeSlug]} />
       )}
     </Box>
   );

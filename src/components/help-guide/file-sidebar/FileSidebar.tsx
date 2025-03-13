@@ -1,7 +1,7 @@
 import "./FileSidebar.css"
 
 import { useParams, Link as RouterLink } from "react-router-dom";
-import { Box, List, ListItem, Link, Heading, useColorModeValue } from "@chakra-ui/react";
+import { Box, List, ListItem, Link, useColorModeValue } from "@chakra-ui/react";
 
 
 interface FileSidebarProps {
@@ -21,24 +21,25 @@ function FileSidebar({ files }: FileSidebarProps){
       paddingRight={0}
     >
       <List spacing={3}>
-        {files.map((file) => (
-          <ListItem key={file.replace(".md", "")}>
+        {files.map((file) => {
+          const currentFileName = file.replace(".md", "")
+          return (<ListItem key={currentFileName}>
             <Link
               as={RouterLink}
-              to={`/docs/${file.replace(".md", "")}`}
+              to={`/docs/${currentFileName}`}
               fontSize="md"
               p={2}
               display="block"
               textAlign="left"
               borderLeftWidth="2px"
-              borderLeftColor={docName === file.replace(".md", "") ? activeColor : "transparent"}
+              borderLeftColor={docName === currentFileName ? activeColor : "transparent"}
               _hover={{ opacity: "70%"}}
               _focus={{ bg: focusBg, color: "orange.900" }}
             >
-              {file.replace(".md", "").charAt(0).toUpperCase() + file.replace(".md", "").slice(1).replace(/-/g, " ")}
+              {currentFileName.charAt(0).toUpperCase() + currentFileName.slice(1).replace(/-/g, " ")}
             </Link>
-          </ListItem>
-        ))}
+          </ListItem>)
+        })}
       </List>
     </Box>
   );
