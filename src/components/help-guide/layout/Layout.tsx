@@ -7,11 +7,11 @@ import TocSidebar from "../toc-sidebar/TocSidebar";
 export interface TocItem { 
   id: string; 
   text: string 
+  level: number;
 }
 
 function Layout(){
   const [toc, setToc] = useState<TocItem[]>([]);
-  console.log(toc)
 
   return (
     <Box>

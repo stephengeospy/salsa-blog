@@ -63,11 +63,13 @@ function MarkdownViewer({
   const extractHeadings = (text: string): TocItem[] => {
     const headingLines = text.split("\n").filter((line) => line.startsWith("#"));
     return headingLines.map((line) => {
+      const level = line.split(" ")[0].length;
       const text = line.replace(/#/g, "").trim();
-      const id = formatSlug(text)
-      return { id, text };
+      const id = formatSlug(text);
+      return { id, text, level };
     });
   };
+  
 
   return (
     <Box>
