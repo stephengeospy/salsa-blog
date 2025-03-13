@@ -50,7 +50,8 @@ return (
           maxHeight="100vh"
           overflowY="auto"
           width="100%"
-          p={4}
+          p={2}
+          paddingRight={0}
         >
           <FileSidebar files={files} />
         </Box>

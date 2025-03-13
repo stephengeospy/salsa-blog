@@ -10,14 +10,15 @@ interface FileSidebarProps {
 
 function FileSidebar({ files }: FileSidebarProps){
   const { docName } = useParams<{ docName: string }>();
-  const activeColor = useColorModeValue("orange.600", "orange.300"); // Active file color
-  const hoverBg = useColorModeValue("orange.100", "orange.700"); // Hover background
+  const activeColor = useColorModeValue("orange.600", "orange.300");
+  const focusBg = useColorModeValue("orange.100", "orange.700");
 
   return (
     <Box
       as="nav"
       bg="orange.50"
       p={5}
+      paddingRight={0}
     >
       <List spacing={3}>
         {files.map((file) => (
@@ -29,9 +30,10 @@ function FileSidebar({ files }: FileSidebarProps){
               p={2}
               display="block"
               textAlign="left"
-              borderBottomWidth="2px"
-              borderBottomColor={docName === file.replace(".md", "") ? activeColor : "transparent"}
-              _hover={{ bg: hoverBg, color: "orange.900" }}
+              borderLeftWidth="2px"
+              borderLeftColor={docName === file.replace(".md", "") ? activeColor : "transparent"}
+              _hover={{ opacity: "70%"}}
+              _focus={{ bg: focusBg, color: "orange.900" }}
             >
               {file.replace(".md", "").charAt(0).toUpperCase() + file.replace(".md", "").slice(1).replace(/-/g, " ")}
             </Link>

@@ -14,7 +14,7 @@ function TocSidebar({ toc }: TocSidebarProps) {
   return (
     <Box as="nav" p={5}>
       <Heading size="md" mb={4}>
-        Table of Contents
+        On this page
       </Heading>
       <List spacing={3}>
         {toc.map((item) => (
