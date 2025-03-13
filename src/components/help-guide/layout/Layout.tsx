@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Grid, GridItem } from "@chakra-ui/react";
 import FileSidebar from "../file-sidebar/FileSidebar";
 import MarkdownViewer from "../markdown-viewer/MarkdownViewer";
 import TocSidebar from "../toc-sidebar/TocSidebar";
@@ -33,13 +33,64 @@ interface TocItem {
       fetchFiles();
     }, []);
 
-return (    <Flex>
-    <FileSidebar files={files} />
-    <Box flex="1">
-    <MarkdownViewer setToc={setToc} />
-    </Box>
-    <TocSidebar toc={toc}/>
-  </Flex>)
-}
+return (
+    <Grid templateColumns="250px 1fr 300px" height="100vh">
+      {/* Left Sidebar - File List */}
+      <GridItem
+        display="flex"
+        flexDirection="column"
+        height="100vh"
+        bg="orange.50"
+        borderRight="1px solid"
+        borderColor="orange.200"
+      >
+        <Box
+          position="sticky"
+          top="0"
+          maxHeight="100vh"
+          overflowY="auto"
+          width="100%"
+          p={4}
+        >
+          <FileSidebar files={files} />
+        </Box>
+      </GridItem>
+
+      {/* Main Content - Markdown Viewer */}
+      <GridItem
+        display="flex"
+        flexDirection="column"
+        height="100vh"
+        overflowY="auto"
+        p={4}
+        bg="white"
+        borderRadius="md"
+        boxShadow="md"
+      >
+        <MarkdownViewer setToc={setToc} />
+      </GridItem>
+
+      {/* Right Sidebar - TOC */}
+      <GridItem
+        display="flex"
+        flexDirection="column"
+        height="100vh"
+        bg="orange.50"
+        borderLeft="1px solid"
+        borderColor="orange.200"
+      >
+        <Box
+          position="sticky"
+          top="0"
+          maxHeight="100vh"
+          overflowY="auto"
+          width="100%"
+          p={4}
+        >
+          <TocSidebar toc={toc} />
+        </Box>
+      </GridItem>
+    </Grid>
+  );}
 
 export default Layout;

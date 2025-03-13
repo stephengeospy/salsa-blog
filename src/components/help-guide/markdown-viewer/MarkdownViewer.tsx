@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
-import { Box, Heading, Spinner, Text } from "@chakra-ui/react";
+import { Box, Heading, Spinner, Text, Divider } from "@chakra-ui/react";
 
 interface TocItem {
   heading: string;
@@ -68,9 +68,15 @@ function MarkdownViewer({ setToc }: MarkdownViewerProps) {
             </Heading>
           ),
           h2: ({ children }) => (
+            <>
+            <Box padding="5">
+                <Divider />
+            </Box>
+            
             <Heading as="h2" size="xl" mb={4} id={String(children).toLowerCase().replace(/\s+/g, "-").replace(/\./g, "")}>
               {children}
             </Heading>
+            </>
           ),
           h3: ({ children }) => (
             <Heading as="h3" size="lg" mb={3} id={String(children).toLowerCase().replace(/\s+/g, "-").replace(/\./g, "")}>
